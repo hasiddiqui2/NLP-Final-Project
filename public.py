@@ -77,7 +77,9 @@ def main():
    #vid_id = input("Enter video ID: ")
    videoID = "2kyS6SvSYSE"
    # make_csv(comment_threads(videoID))
+   # you just need to replace the following array with an array that contains all the video id's from the database. 
    videoIDs = ["puqaWrEC7tY", "d380meD0W0M", "gHZ1Qz0KiKM", "39idVpFF7NQ", "nc99ccSXST0"]
+
    make_csv(video_threads(videoIDs))
 if __name__ == "__main__":
    main()
