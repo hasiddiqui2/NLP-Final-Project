@@ -36,7 +36,7 @@
 #    main()
 
 import os
-# import pandas as pd
+import pandas as pd
 # import numpy as n
 #import text2emotion as te
 #from dotenv import load_dotenv
@@ -59,15 +59,24 @@ def video_threads(videoIDs):
       comments_list.extend(process_comments(response['items']))
    return comments_list
 
-def comment_threads(videoID):
+def video_threads(videoIDs):
    comments_list = []
-   request = youtube.commentThreads().list(
-      part='id, snippet',
-      videoId=videoID,
-      maxResults = 100
-      )
-   response = request.execute()
-   comments_list.extend(process_comments(response['items']))
+   inaccessible_vid_ids = []
+   for videoID in videoIDs:
+      try:
+         request = youtube.commentThreads().list(
+               part='id, snippet',
+               videoId=videoID,
+               maxResults=100
+         )
+         response = request.execute()
+         comments_list.extend(process_comments(response['items']))
+      except Exception as e:
+         # print(f"Error processing video ID {videoID}: {e}")
+         inaccessible_vid_ids.append(videoID)
+         continue
+   print('the following vids could not be accessed:')
+   print(inaccessible_vid_ids)
    return comments_list
    #print(response.keys())
    # print(response)
@@ -79,7 +88,14 @@ def main():
    # make_csv(comment_threads(videoID))
    # you just need to replace the following array with an array that contains all the video id's from the database. 
    videoIDs = ["puqaWrEC7tY", "d380meD0W0M", "gHZ1Qz0KiKM", "39idVpFF7NQ", "nc99ccSXST0"]
-
-   make_csv(video_threads(videoIDs))
+   
+   #extracting all video ids from dataset
+   us_url = 'https://raw.githubusercontent.com/MayurDeshmukh10/youtube_analysis/master/USvideos.csv'
+   us_data = pd.read_csv(us_url)
+   video_ids = us_data['video_id'].tolist()
+   # print(video_ids)
+  
+   #make_csv(video_threads(videoIDs))
+   make_csv(video_threads(video_ids))
 if __name__ == "__main__":
    main()

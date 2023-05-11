@@ -30,11 +30,13 @@ def process_comments(response_items):
                 comments.append(comment)
         else:
             comment = {}
+            
             comment['snippet'] = res['snippet']['topLevelComment']['snippet']
             comment['snippet']['parentId'] = None
             comment['snippet']['commentId'] = res['snippet']['topLevelComment']['id']
 
             comments.append(comment['snippet'])
+            
 
     make_csv(comments)
     
