@@ -5,9 +5,9 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from textblob import TextBlob
 
 def main():
-    
+
     text = TextBlob(us_comments())
-    print(text.sentiment)
+    print(text.sentiment, text)
 
 if __name__ == '__main__':
     main()
