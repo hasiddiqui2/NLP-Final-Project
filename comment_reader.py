@@ -9,8 +9,9 @@ import csv
     ['XpVt6Z1Gjjo', 'Say hi to Kong and maverick for me', '3', '0']
     ]
 '''
+
 def us_comments():
-    with open('/Users/iris/Documents/Hunter/SPRING_2023/nlp/final_proj/data/UScomments.csv', mode='r', encoding='utf-8-sig') as infile:
+    with open('data/UScomments.csv', mode='r', encoding='utf-8-sig') as infile:
         reader = csv.reader(infile, quoting=csv.QUOTE_ALL)
         header_data = list(next(reader))
         infile = infile.read().replace('\0', '').splitlines()
@@ -21,7 +22,7 @@ def us_comments():
 # to read count csv, should maintain usecols becasue commas are inside string, otherwise will crash
 # i included to_csv to save the clipped data that works for us
 def non_comment():
-    count_data = pd.read_csv('/Users/iris/Documents/Hunter/SPRING_2023/nlp/final_proj/data/USvideos.csv', usecols=['video_id','title','channel_title','views','likes','dislikes','comment_total'])
+    count_data = pd.read_csv('data/USvideos.csv', usecols=['video_id','title','channel_title','views','likes','dislikes','comment_total'])
     return (count_data.iloc[963])
     #return (pd.read_csv('/Users/iris/Documents/Hunter/SPRING_2023/nlp/final_proj/data/USvideos.csv', usecols=['video_id','title','channel_title','views','likes','dislikes','comment_total']))
 

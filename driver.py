@@ -53,12 +53,11 @@ def main():
             usable_vid_count += 1
         else:
             unusable_vid_count += 1
-    print(usable_vid_count)
-    print(unusable_vid_count)
+    # print(usable_vid_count)
+    # print(unusable_vid_count)
 
 
-    print(agregate_sentiments(comment_map, polarity_score_list))
-
+    agregate_sentiments(comment_map, polarity_score_list)
 
 if __name__ == '__main__':
     main()

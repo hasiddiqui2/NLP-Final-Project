@@ -19,8 +19,6 @@ def us_comments():
     #return comment_data[963][1]
     #print(comment_data[:5])
     return comment_data
-    #process_comment_data(comment_data)
-
 
 
 # to read count csv, should maintain usecols becasue commas are inside string, otherwise will crash
@@ -32,11 +30,12 @@ def us_videos():
     return count_data
 
 
-'''
-process_comment_data()
-returns a list of unique video ids along with their comment count
-'''
+
 def process_comment_data(comment_data):
+    '''
+    process_comment_data()
+    returns a list of unique video ids along with their comment count
+    '''
     list_of_ids = []
     comment_map = {}
     for comment in comment_data:
@@ -48,15 +47,30 @@ def process_comment_data(comment_data):
             comment_map[comment[0]] = 1
         else:
             comment_map[comment[0]] += 1
-    print(len(list_of_ids))
-    print(len(list(set(list_of_ids))))
-    print(len(comment_map))
+    # print(len(list_of_ids))
+    # print(len(list(set(list_of_ids))))
+    # print(len(comment_map))
     # for key in comment_map:
     #     print(key, comment_map[key])
     return list_of_ids, comment_map
 
-# average score calculator for a video
+
 def agregate_sentiments(comment_map, polarity_score_list):
+
+    '''
+    this function average score calculator for a video and a send it to a csv.
+
+    Args:
+        comment_map (hashMap(str, int)): has unique video_id and count of it
+        polarity_score_list(list of int): list of sentiment polarity score
+
+    Returns: 
+        writes out a csv file=>
+            video_id,compound_score
+            zuKX0fPlo2Q,0.9394
+            UJKl7ToDi20,0.8954999999999999
+            dsH83p_mfEs,0.8493666666666666
+    '''
     score_agregate = {}
     #calulating sum of scores for a video
     for comment in polarity_score_list:
@@ -70,8 +84,14 @@ def agregate_sentiments(comment_map, polarity_score_list):
     for vid_id in score_agregate:
         score_agregate[vid_id] /= comment_map[vid_id]
     
-    return score_agregate
+    # write the csv in descending order
+    top_items = sorted(score_agregate.items(), key=lambda x: x[1], reverse=True)
 
-
+    # write the items to a CSV file
+    with open('top_items.csv', mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['video_id', 'compound_score'])
+        for key, value in top_items:
+            writer.writerow([key, value])
 
 
