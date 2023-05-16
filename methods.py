@@ -111,3 +111,4 @@ def merger():
 
     # Save the merged dataframe as CSV
     merged_df.to_csv('merged.csv', index=False)
+    
