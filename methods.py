@@ -95,3 +95,19 @@ def agregate_sentiments(comment_map, polarity_score_list):
             writer.writerow([key, value])
 
 
+def merger():
+
+    count_data = pd.read_csv('data/USvideos.csv', usecols=['video_id','title','views','likes','dislikes','comment_total'], index_col=None)
+    #print('count_data: ', type(count_data))
+    # Read the score CSV file
+    score_csv = pd.read_csv('top_items.csv', index_col=None)
+    #print('score_csv: ', type(score_csv))
+        
+    # Merge the two dataframes on 'video_id' column
+    merged_df = pd.merge(count_data, score_csv, on='video_id')
+
+    # drop duplicates based on a specific column (e.g. 'column_name')
+    merged_df.drop_duplicates(subset=['video_id'], inplace=True)
+
+    # Save the merged dataframe as CSV
+    merged_df.to_csv('merged.csv', index=False)

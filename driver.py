@@ -1,4 +1,4 @@
-from methods import us_comments, us_videos, process_comment_data, agregate_sentiments
+from methods import us_comments, us_videos, process_comment_data, agregate_sentiments, merger
 import pandas as pd
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from textblob import TextBlob
@@ -9,8 +9,6 @@ def main():
     analyzer = SentimentIntensityAnalyzer()
 
     comment_data = us_comments()
-    # print (us_comments())
-    
     polarity_score_list = []
 
     for comment in comment_data:
@@ -24,19 +22,9 @@ def main():
 
         polarity_score_list.append([comment[0],comment[1],compound_score])
 
-    # for comment in comment_data:
-    #     text = TextBlob(comment[1])
-    #     #score from textblob
-    #     polarity_score = text.sentiment.polarity
-
-    #     polarity_score_list.append([comment[0],comment[1],polarity_score])
-    
-    #polarity_score_list.to_csv('polarity.csv')
-    # Specify the file name you want to save as
-    file_name = 'comment_polarity.csv'
 
     # Write the list to a CSV file
-    with open(file_name, 'w', newline='') as file:
+    with open('comment_polarity.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(polarity_score_list)
 
@@ -53,14 +41,12 @@ def main():
             usable_vid_count += 1
         else:
             unusable_vid_count += 1
-    # print(usable_vid_count)
-    # print(unusable_vid_count)
-
-
+    print(usable_vid_count)
+    print(unusable_vid_count)
+    
     agregate_sentiments(comment_map, polarity_score_list)
 
+    # merges the USvideo.csv and agregate_sentiment's csv
+    merger()
 if __name__ == '__main__':
     main()
-
-
-
