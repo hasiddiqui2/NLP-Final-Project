@@ -13,8 +13,9 @@ def video_threads(videoIDs):
          request = youtube.commentThreads().list(
                part='id, snippet',
                videoId=videoID,
-               maxResults=100
-         )
+               maxResults=100,
+               order="relevance"
+            )
          response = request.execute()
          comments_list.extend(process_comments(response['items']))
       except Exception as e:

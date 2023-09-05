@@ -1,15 +1,15 @@
 import pandas as pd
 import csv
 
-# this works but result is list of list
-'''
->>>
+
+def us_comments():
+    '''
+    output:s
     [
     ['XpVt6Z1Gjjo', "Logan Paul it's yo big day ‼️‼️‼️", '4', '0'],
     ['XpVt6Z1Gjjo', 'Say hi to Kong and maverick for me', '3', '0']
     ]
 '''
-def us_comments():
     with open('data/UScomments.csv', mode='r', encoding='utf-8-sig') as infile:
         reader = csv.reader(infile, quoting=csv.QUOTE_ALL)
         header_data = list(next(reader))
@@ -96,8 +96,11 @@ def agregate_sentiments(comment_map, polarity_score_list):
 
 
 def merger():
+    '''
+    simple merging function to get columns: video_id,views,likes,dislikes,comment_total,compound_score
 
-    count_data = pd.read_csv('data/USvideos.csv', usecols=['video_id','title','views','likes','dislikes','comment_total'], index_col=None)
+    '''
+    count_data = pd.read_csv('data/USvideos.csv', usecols=['video_id','views','likes','dislikes','comment_total'], index_col=None)
     #print('count_data: ', type(count_data))
     # Read the score CSV file
     score_csv = pd.read_csv('top_items.csv', index_col=None)

@@ -13,7 +13,11 @@ def main():
 
     for comment in comment_data:
         text = comment[1]
-        
+        blob = TextBlob(text)
+
+        # Perform spellcheck
+        corrected_text = blob.correct()
+
         # contains pos, neg, and compund scores
         all_scores_for_comment = analyzer.polarity_scores(text)
 
@@ -41,8 +45,8 @@ def main():
             usable_vid_count += 1
         else:
             unusable_vid_count += 1
-    print(usable_vid_count)
-    print(unusable_vid_count)
+    # print(usable_vid_count)
+    # print(unusable_vid_count)
     
     agregate_sentiments(comment_map, polarity_score_list)
 
