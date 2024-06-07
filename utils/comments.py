@@ -5,7 +5,7 @@ comments = []
 
 def make_csv(comments):
     header = comments[0].keys()
-    filename= f'comments_video_comments.csv'
+    filename= 'comments_video_comments.csv'
     with open(filename, 'w', encoding='utf8', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=header, extrasaction='ignore')
         writer.writeheader()
